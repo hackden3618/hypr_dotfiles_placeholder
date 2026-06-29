@@ -10,6 +10,7 @@ Date: 2026-06-29
 - `awww` and `awww-daemon` are installed.
 - `swww` and `swww-daemon` are not installed.
 - `hyprctl` could not reach the compositor socket from the Codex shell, so live reload validation must be run from a user shell inside the Hyprland session.
+- A live unsandboxed `hyprctl configerrors` check was run and reported no errors.
 
 ## Active Today
 
@@ -24,6 +25,9 @@ Date: 2026-06-29
 - `config/` contains the target Lua directory skeleton but no live modules yet.
 - `docs/` now documents the migration path.
 - `hyprland.lua` has not been created as the active entry point.
+- `hyprland.lua` now exists as a verified staged Lua entry point.
+- `config/desktop/rules/generated.lua` contains a Lua parity port of the active generated window/layer rules from `UserConfigs/WindowRules.conf`.
+- Lua keybind modules cover the main legacy desktop, media, laptop, screenshot, launcher, wallpaper, Waybar, session, workspace, layout, and compositor control workflows.
 
 ## Completed Foundation
 
@@ -33,8 +37,17 @@ Date: 2026-06-29
 - Added `scripts/WallustApply.sh` as the maintained wallpaper color helper.
 - Kept `scripts/WallustSwww.sh` as a compatibility wrapper for any external callers.
 - Disabled the stale `RainbowBorders.sh` startup entry because the script is not present.
+- Added a verified Lua module tree using the installed Hyprland 0.55 Lua API.
+- Added `install/activate-lua.sh` and `install/rollback-legacy.sh`.
+- Added platform packages, profiles, shared constants, diagnostics, and installation tooling.
 - Added the full ATLAS automation directory structure and populated missing categories.
 
 ## Do Not Flip Yet
 
-Do not point active keybinds at `automation/` wholesale until the copied scripts have been normalized and smoke-tested. Do not switch to Lua until the `config/` modules exist and mirror the current behavior.
+Do not switch the login/session default to Lua until the explicit test command below has been run from a separate TTY or nested-safe session and the smoke tests pass:
+
+```bash
+Hyprland --config ~/.config/hypr/hyprland.lua
+```
+
+Keep `hyprland.conf` as rollback until that live test has passed.

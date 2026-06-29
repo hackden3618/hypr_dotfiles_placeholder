@@ -1,0 +1,12 @@
+# Core operating environment
+base
+base-devel
+linux
+linux-firmware
+networkmanager
+pipewire
+wireplumber
+xdg-desktop-portal
+xdg-desktop-portal-hyprland
+polkit
+hyprpolkitagent

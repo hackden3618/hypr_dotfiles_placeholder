@@ -19,6 +19,7 @@ wl-copy
 
 exit
 
+: <<'ATLAS_EMOJI_DATA'
 # # DATA # #
 😀 grinning face face smile happy joy :D grin
 😃 grinning face with big eyes face happy joy haha :D :) smile funny
@@ -1869,3 +1870,4 @@ ycap  symbol blue-square twitter
 🫧 bubbles soap fun carbonation sparkling
 🪪 identification card document
 🟰 heavy equals sign math
+ATLAS_EMOJI_DATA

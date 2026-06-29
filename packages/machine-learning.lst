@@ -1,0 +1,8 @@
+# Machine learning and AI development
+python-numpy
+python-pandas
+python-scikit-learn
+python-pytorch
+jupyterlab
+uv
+ruff

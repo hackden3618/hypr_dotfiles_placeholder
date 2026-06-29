@@ -26,7 +26,7 @@
 
 ## Phase 4: Lua Cutover
 
-- Create `hyprland.lua`.
+- `hyprland.lua` exists and verifies.
 - Keep `hyprland.conf` as rollback.
 - Reload from a Hyprland session.
 - Fix config errors before logout or reboot.

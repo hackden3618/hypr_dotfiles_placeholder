@@ -1,0 +1,22 @@
+-- Media and hardware keybinds.
+
+hl.bind(" + XF86AudioRaiseVolume", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/volume.sh --inc"))
+hl.bind(" + XF86AudioLowerVolume", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/volume.sh --dec"))
+hl.bind(" + XF86AudioMute", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/volume.sh --toggle"))
+hl.bind(" + XF86AudioMicMute", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/volume.sh --toggle-mic"))
+hl.bind(" + XF86AudioPlay", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/media.sh --pause"))
+hl.bind(" + XF86AudioPause", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/media.sh --pause"))
+hl.bind(" + XF86AudioNext", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/media.sh --nxt"))
+hl.bind(" + XF86AudioPrev", hl.dsp.exec_cmd(ATLAS.automation .. "/audio/media.sh --prv"))
+hl.bind(" + XF86MonBrightnessUp", hl.dsp.exec_cmd(ATLAS.automation .. "/display/brightness.sh --inc"))
+hl.bind(" + XF86MonBrightnessDown", hl.dsp.exec_cmd(ATLAS.automation .. "/display/brightness.sh --dec"))
+hl.bind(" + XF86Sleep", hl.dsp.exec_cmd("systemctl suspend"))
+hl.bind(" + XF86Rfkill", hl.dsp.exec_cmd(ATLAS.automation .. "/system/airplane-mode.sh"))
+hl.bind(" + XF86PowerOff", hl.dsp.exec_cmd(ATLAS.automation .. "/session/power-confirm.sh"))
+
+hl.bind(USER.mainMod .. " + Print", hl.dsp.exec_cmd("hyprshot -m output -o ~/Pictures/Screenshots"))
+hl.bind(USER.mainMod .. " + SHIFT + Print", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
+hl.bind(USER.mainMod .. " + CTRL + Print", hl.dsp.exec_cmd(ATLAS.scripts .. "/ScreenShot.sh --in5"))
+hl.bind(USER.mainMod .. " + CTRL + SHIFT + Print", hl.dsp.exec_cmd(ATLAS.scripts .. "/ScreenShot.sh --in10"))
+hl.bind("ALT + Print", hl.dsp.exec_cmd("hyprshot -m active -o ~/Pictures/Screenshots"))
+hl.bind(USER.mainMod .. " + SHIFT + S", hl.dsp.exec_cmd(ATLAS.scripts .. "/ScreenShot.sh --swappy"))

@@ -19,6 +19,14 @@ The Lua migration is intentionally staged. Do not switch to `hyprland.lua` until
 - Master plan: `implementation_plan.md`
 - Architecture: `docs/ARCHITECTURE.md`
 - Automation: `docs/AUTOMATION.md`
+- Directory structure: `docs/DIRECTORY_STRUCTURE.md`
+- Installation: `docs/INSTALLATION.md`
+- Packages: `docs/PACKAGES.md`
+- Development platform: `docs/DEVELOPMENT.md`
+- Security: `docs/SECURITY.md`
+- Workflow: `docs/WORKFLOW.md`
+- Troubleshooting: `docs/TROUBLESHOOTING.md`
+- Lua migration: `docs/LUA_MIGRATION.md`
 - Roadmap: `docs/ROADMAP.md`
 - Current migration status: `docs/STATUS.md`
 

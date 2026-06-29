@@ -1,0 +1,11 @@
+# Security and secrets
+gnupg
+pinentry
+pass
+openssh
+age
+sops
+ufw
+nmap
+wireshark-qt
+tcpdump

@@ -1,0 +1,13 @@
+# General utilities
+bc
+curl
+wget
+rsync
+unzip
+zip
+trash-cli
+fastfetch
+btop
+ncdu
+powertop
+tlp
