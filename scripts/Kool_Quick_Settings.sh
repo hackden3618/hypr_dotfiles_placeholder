@@ -3,7 +3,7 @@
 # Rofi menu for KooL Hyprland Quick Settings (SUPER SHIFT E)
 
 # Modify this config file for default terminal and EDITOR
-config_file="$HOME/.config/hypr/UserConfigs/01-UserDefaults.conf"
+config_file="$HOME/.config/hypr/hyprconf/UserConfigs/01-UserDefaults.conf"
 
 tmp_config_file=$(mktemp)
 sed 's/^\$//g; s/ = /=/g' "$config_file" > "$tmp_config_file"
@@ -11,8 +11,8 @@ source "$tmp_config_file"
 # ##################################### #
 
 # variables
-configs="$HOME/.config/hypr/configs"
-UserConfigs="$HOME/.config/hypr/UserConfigs"
+configs="$HOME/.config/hypr/hyprconf/configs"
+UserConfigs="$HOME/.config/hypr/hyprconf/UserConfigs"
 rofi_theme="$HOME/.config/rofi/config-edit.rasi"
 msg=' ⁉️ Choose what to do ⁉️'
 iDIR="$HOME/.config/swaync/images"

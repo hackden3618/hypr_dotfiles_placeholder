@@ -10,8 +10,8 @@ fi
 # Variables
 iDIR="$HOME/.config/swaync/images"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
-animations_dir="$HOME/.config/hypr/animations"
-UserConfigs="$HOME/.config/hypr/UserConfigs"
+animations_dir="$HOME/.config/hypr/hyprconf/animations"
+UserConfigs="$HOME/.config/hypr/hyprconf/UserConfigs"
 rofi_theme="$HOME/.config/rofi/config-Animations.rasi"
 msg='❗NOTE:❗ This will copy animations into UserAnimations.conf'
 # list of animation files, sorted alphabetically with numbers first
