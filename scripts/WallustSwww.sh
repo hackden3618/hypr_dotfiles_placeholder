@@ -38,9 +38,14 @@ else
   done
 
   if [[ -f "$cache_file" ]]; then
-    # The first non-filter line is the original wallpaper path
-    # wallpaper_path="$(grep -v 'Lanczos3' "$cache_file" | head -n 1)"
-    wallpaper_path=$(swww query | grep $current_monitor | awk '{print $9}')
+    # Use swww query JSON output to reliably extract the wallpaper path
+    if command -v jq >/dev/null 2>&1; then
+      wallpaper_path=$(swww query -j 2>/dev/null | jq -r --arg mon "$current_monitor" '.[] | select(.name == $mon) | .image' 2>/dev/null || true)
+    fi
+    # Fallback to cache file if JSON parsing fails
+    if [[ -z "$wallpaper_path" || ! -f "$wallpaper_path" ]]; then
+      wallpaper_path="$(grep -v 'Lanczos3' "$cache_file" | head -n 1)"
+    fi
   fi
 fi
 
@@ -57,3 +62,4 @@ cp -f "$wallpaper_path" "$wallpaper_current" || true
 # Run wallust (silent) to regenerate templates defined in ~/.config/wallust/wallust.toml
 # -s is used in this repo to keep things quiet and avoid extra prompts
 wallust run -s "$wallpaper_path" || true
+hyprctl reload
