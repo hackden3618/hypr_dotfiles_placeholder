@@ -6,7 +6,7 @@
 # source https://github.com/hyprwm/Hyprland/discussions/4283?sort=new#discussioncomment-8648109
 
 notif="$HOME/.config/swaync/images/ja.png"
-touchpad_device="$(
+configured_touchpad_device="$(
     awk -F= '/^[[:space:]]*\$Touchpad_Device[[:space:]]*=/ {
         value=$2
         sub(/[[:space:]]*#.*/, "", value)
@@ -16,18 +16,44 @@ touchpad_device="$(
     }' "$HOME/.config/hypr/hyprconf/UserConfigs/Laptops.conf"
 )"
 
-set_touchpad_state() {
-    local state="$1"
-
-    if [ -n "$touchpad_device" ]; then
-        hyprctl keyword "device[$touchpad_device]:enabled" "$state" -r 2>/dev/null && return
-        hyprctl keyword "device:$touchpad_device:enabled" "$state" -r 2>/dev/null && return
+touchpad_devices() {
+    if command -v jq >/dev/null 2>&1; then
+        hyprctl devices -j 2>/dev/null |
+            jq -r '.mice[]?.name // empty' |
+            awk 'tolower($0) ~ /(touchpad|trackpad|elan|asue|synaptics)/ { print }'
+    else
+        hyprctl devices 2>/dev/null |
+            awk '
+                /Touchpad at/ { in_touchpad = 1; next }
+                in_touchpad && /^[^[:space:]].*:$/ { in_touchpad = 0 }
+                in_touchpad && /^[[:space:]]*name:/ {
+                    sub(/^[[:space:]]*name:[[:space:]]*/, "")
+                    print
+                }
+            '
     fi
-
-    hyprctl keyword 'input:touchpad:enabled' "$state" -r
 }
 
-export STATUS_FILE="$XDG_RUNTIME_DIR/touchpad.status"
+set_touchpad_state() {
+    local state="$1"
+    local ok=1
+    local device
+
+    if hyprctl keyword 'input:touchpad:enabled' "$state" -r 2>/dev/null; then
+        ok=0
+    fi
+
+    for device in "$configured_touchpad_device" $(touchpad_devices); do
+        [ -n "$device" ] || continue
+        hyprctl keyword "device[$device]:enabled" "$state" -r 2>/dev/null && ok=0
+        hyprctl keyword "device:$device:enabled" "$state" -r 2>/dev/null && ok=0
+    done
+
+    return "$ok"
+}
+
+runtime_dir="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
+export STATUS_FILE="$runtime_dir/touchpad.status"
 
 enable_touchpad() {
     printf "true" >"$STATUS_FILE"
@@ -42,11 +68,11 @@ disable_touchpad() {
 }
 
 if ! [ -f "$STATUS_FILE" ]; then
-  enable_touchpad
+  disable_touchpad
 else
-  if [ $(cat "$STATUS_FILE") = "true" ]; then
+  if [ "$(cat "$STATUS_FILE")" = "true" ]; then
     disable_touchpad
-  elif [ $(cat "$STATUS_FILE") = "false" ]; then
+  elif [ "$(cat "$STATUS_FILE")" = "false" ]; then
     enable_touchpad
   fi
 fi

@@ -40,7 +40,7 @@ else
   if [[ -f "$cache_file" ]]; then
     # The first non-filter line is the original wallpaper path
     # wallpaper_path="$(grep -v 'Lanczos3' "$cache_file" | head -n 1)"
-    wallpaper_path=$(swww query | grep $current_monitor | awk '{print $9}')
+    wallpaper_path=$(awww query | grep $current_monitor | awk '{print $9}')
   fi
 fi
 
@@ -57,3 +57,4 @@ cp -f "$wallpaper_path" "$wallpaper_current" || true
 # Run wallust (silent) to regenerate templates defined in ~/.config/wallust/wallust.toml
 # -s is used in this repo to keep things quiet and avoid extra prompts
 wallust run -s "$wallpaper_path" || true
+hyprctl reload
