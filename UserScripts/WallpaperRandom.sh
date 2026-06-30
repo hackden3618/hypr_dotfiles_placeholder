@@ -22,7 +22,7 @@ AWWW_PARAMS="--transition-fps $FPS --transition-type $TYPE --transition-duration
 awww query || awww-daemon --format xrgb && awww img -o $focused_monitor ${RANDOMPICS} $AWWW_PARAMS
 
 wait $!
-"$SCRIPTSDIR/Wallustawww.sh" &&
+"$SCRIPTSDIR/WallustSwww.sh" &&
 
 wait $!
 sleep 2
