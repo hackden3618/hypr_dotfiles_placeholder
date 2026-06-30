@@ -134,7 +134,8 @@ for i = 1, 10 do
     hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
 
--- NOTE: Removed duplicate SUPER+U binding (was conflicting with line 125)
+
+hl.bind(mainMod .. " + U", hl.dsp.workspace.toggle_special("magic"))
 -- --
 
 -- Move active window and follow to workspace mainMod + SHIFT [0-9]

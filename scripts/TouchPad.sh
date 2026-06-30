@@ -43,18 +43,11 @@ set_touchpad_state() {
         ok=0
     fi
 
-    # Process configured device if set
-    if [ -n "$configured_touchpad_device" ]; then
-        hyprctl keyword "device[$configured_touchpad_device]:enabled" "$state" -r 2>/dev/null && ok=0
-        hyprctl keyword "device:$configured_touchpad_device:enabled" "$state" -r 2>/dev/null && ok=0
-    fi
-
-    # Process detected touchpad devices line by line
-    while IFS= read -r device; do
+    for device in "$configured_touchpad_device" $(touchpad_devices); do
         [ -n "$device" ] || continue
         hyprctl keyword "device[$device]:enabled" "$state" -r 2>/dev/null && ok=0
         hyprctl keyword "device:$device:enabled" "$state" -r 2>/dev/null && ok=0
-    done < <(touchpad_devices)
+    done
 
     return "$ok"
 }
