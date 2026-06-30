@@ -3,7 +3,7 @@ set -euo pipefail
 
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 hyprconf="$root/hyprconf"
-out="$root/hyprland.lua"
+out="${1:-$root/hyprlua/legacy/generated-hyprland.lua}"
 
 files=(
   "$root/hyprland.conf"

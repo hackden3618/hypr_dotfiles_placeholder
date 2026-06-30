@@ -172,7 +172,7 @@ function queue_bind(keystr, expr, opts, desc,    line, merged_opts, combined_des
     combined_desc = pending_desc
     if (desc != "") combined_desc = combined_desc == "" ? desc : combined_desc " + " desc
     merged_opts = opts_with_desc(optbase, combined_desc)
-    print "hl.bind(" lquote(keystr) ", function() hl.dispatch(" pending_expr "); hl.dispatch(" expr ") end" merged_opts ")"
+    print "hl.bind(" lquote(keystr) ", function() " pending_expr "; " expr " end" merged_opts ")"
     pending_key = ""
     pending_line = ""
     pending_expr = ""
@@ -424,7 +424,7 @@ BEGIN {
   print "  return values"
   print "end"
   print ""
-  print "local wallust_vars = load_hyprlang_vars(\"/home/admin/.config/hypr/wallust/wallust-hyprland.conf\")"
+  print "local wallust_vars = load_hyprlang_vars(HOME .. \"/.config/hypr/wallust/wallust-hyprland.conf\")"
   print ""
 }
 

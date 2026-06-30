@@ -275,7 +275,7 @@ hl.window_rule({
     },
     center = true,
     float = true,
-    size = "60% = 70%",
+    size = "60% 70%",
     tag = "+im",
 })
 
@@ -537,7 +537,7 @@ hl.window_rule({
     },
     center = true,
     float = true,
-    size = "65% = 90%",
+    size = "65% 90%",
 })
 
 hl.window_rule({
@@ -573,7 +573,7 @@ hl.window_rule({
         class = "^([Ww]hatsapp-for-linux|ZapZap|com.rtosta.zapzap)$",
     },
     center = true,
-    size = "60% = 70%",
+    size = "60% 70%",
 })
 
 hl.window_rule({
@@ -582,7 +582,7 @@ hl.window_rule({
         title = "^(Picture-in-Picture)$",
     },
     float = true,
-    move = "72% = 7%",
+    move = "72% 7%",
     opacity = "0.95 0.75",
     pin = false,
 })
@@ -602,7 +602,7 @@ hl.window_rule({
     },
     float = true,
     opacity = "0.9 0.7",
-    size = "70% = 70%",
+    size = "70% 70%",
 })
 
 hl.window_rule({
@@ -612,7 +612,7 @@ hl.window_rule({
     },
     float = true,
     opacity = "0.8 0.7",
-    size = "70% = 70%",
+    size = "70% 70%",
 })
 
 hl.window_rule({
@@ -700,7 +700,7 @@ hl.window_rule({
     },
     center = true,
     float = true,
-    size = "70% = 60%",
+    size = "70% 60%",
 })
 
 hl.window_rule({
@@ -710,7 +710,7 @@ hl.window_rule({
     },
     center = true,
     float = true,
-    size = "70% = 60%",
+    size = "70% 60%",
 })
 
 hl.window_rule({
@@ -719,7 +719,7 @@ hl.window_rule({
         initial_title = "(Open Files)",
     },
     float = true,
-    size = "70% = 60%",
+    size = "70% 60%",
 })
 
 hl.window_rule({
@@ -729,7 +729,7 @@ hl.window_rule({
     },
     center = true,
     float = true,
-    size = "16% = 12%",
+    size = "16% 12%",
 })
 
 hl.window_rule({
@@ -809,8 +809,7 @@ hl.window_rule({
     match = {
         class = "^(code)$",
     },
-    opacity = 0.8,
-    opacity = 0.9,
+    opacity = "0.9 0.8",
 })
 
 hl.window_rule({
