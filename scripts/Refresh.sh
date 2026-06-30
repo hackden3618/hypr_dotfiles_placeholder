@@ -43,9 +43,6 @@ done
 sleep 0.1
 waybar &
 
-# reload-config
-hyprctl reload
-
 # relaunch swaync
 sleep 0.3
 swaync >/dev/null 2>&1 &
