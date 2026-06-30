@@ -38,14 +38,9 @@ else
   done
 
   if [[ -f "$cache_file" ]]; then
-    # Use swww query JSON output to reliably extract the wallpaper path
-    if command -v jq >/dev/null 2>&1; then
-      wallpaper_path=$(swww query -j 2>/dev/null | jq -r --arg mon "$current_monitor" '.[] | select(.name == $mon) | .image' 2>/dev/null || true)
-    fi
-    # Fallback to cache file if JSON parsing fails
-    if [[ -z "$wallpaper_path" || ! -f "$wallpaper_path" ]]; then
-      wallpaper_path="$(grep -v 'Lanczos3' "$cache_file" | head -n 1)"
-    fi
+    # The first non-filter line is the original wallpaper path
+    # wallpaper_path="$(grep -v 'Lanczos3' "$cache_file" | head -n 1)"
+    wallpaper_path=$(awww query | grep $current_monitor | awk '{print $9}')
   fi
 fi
 

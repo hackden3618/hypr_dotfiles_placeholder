@@ -10,20 +10,20 @@ fi
 # Variables
 iDIR="$HOME/.config/swaync/images"
 SCRIPTSDIR="$HOME/.config/hypr/scripts"
-animations_dir="$HOME/.config/hypr/hyprlua/animations"
-UserConfigs="$HOME/.config/hypr/hyprlua/UserConfigs"
+animations_dir="$HOME/.config/hypr/hyprconf/animations"
+UserConfigs="$HOME/.config/hypr/hyprconf/UserConfigs"
 rofi_theme="$HOME/.config/rofi/config-Animations.rasi"
-msg='❗NOTE:❗ This will copy animations into UserAnimations.lua'
+msg='❗NOTE:❗ This will copy animations into UserAnimations.conf'
 # list of animation files, sorted alphabetically with numbers first
-animations_list=$(find -L "$animations_dir" -maxdepth 1 -type f | sed 's/.*\///' | sed 's/\.lua$//' | sort -V)
+animations_list=$(find -L "$animations_dir" -maxdepth 1 -type f | sed 's/.*\///' | sed 's/\.conf$//' | sort -V)
 
 # Rofi Menu
 chosen_file=$(echo "$animations_list" | rofi -i -dmenu -config $rofi_theme -mesg "$msg")
 
 # Check if a file was selected
 if [[ -n "$chosen_file" ]]; then
-    full_path="$animations_dir/$chosen_file.lua"
-    cp "$full_path" "$UserConfigs/UserAnimations.lua"
+    full_path="$animations_dir/$chosen_file.conf"    
+    cp "$full_path" "$UserConfigs/UserAnimations.conf"    
     notify-send -u low -i "$iDIR/ja.png" "$chosen_file" "Hyprland Animation Loaded"
 fi
 

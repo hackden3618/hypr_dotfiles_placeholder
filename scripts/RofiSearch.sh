@@ -32,8 +32,5 @@ if pgrep -x "rofi" >/dev/null; then
     pkill rofi
 fi
 
-# Open Rofi and pass the selected query to xdg-open for search
-query=$(echo "" | rofi -dmenu -config "$rofi_theme" -mesg "$msg")
-if [[ -n "$query" ]]; then
-    xdg-open "${Search_Engine}${query}"
-fi
+# Open Rofi and pass the selected query to xdg-open for Google search
+echo "" | rofi -dmenu -config "$rofi_theme" -mesg "$msg" | xargs -I{} xdg-open $Search_Engine
