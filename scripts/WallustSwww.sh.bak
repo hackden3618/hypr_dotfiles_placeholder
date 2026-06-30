@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */
-##
+# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
 # Wallust: derive colors from the current wallpaper and update templates
 # Usage: Wallustawww.sh [absolute_path_to_wallpaper]
 
@@ -38,9 +37,17 @@ else
     sleep 0.1
   done
 
-  if [[ -f "$cache_file" ]]; then
-    # Use awww query to extract the wallpaper path for the current monitor
-    wallpaper_path=$(awww query | grep "$current_monitor" | awk '{print $9}')
+#  if [[ -f "$cache_file" ]]; then
+    # Use awww query JSON output to reliably extract the wallpaper path
+#   if command -v jq >/dev/null 2>&1; then
+#      wallpaper_path=$(awww query -j 2>/dev/null | jq -r --arg mon "$current_monitor" '.[] | select(.name == $mon) | .image' 2>/dev/null || true)
+#    fi
+    # Fallback to cache file if JSON parsing fails
+#    if [[ -z "$wallpaper_path" || ! -f "$wallpaper_path" ]]; then
+#     wallpaper_path="$(grep -v 'Lanczos3' "$cache_file" | head -n 1)"
+#    fi
+
+ wallpaper_path=$(awww query | grep $current_monitor | awk '{print $9}')
   fi
 fi
 
@@ -52,9 +59,10 @@ fi
 # Update helpers that depend on the path
 ln -sf "$wallpaper_path" "$rofi_link" || true
 mkdir -p "$(dirname "$wallpaper_current")"
-cp "$wallpaper_path" "$wallpaper_current"
+cp -f "$wallpaper_path" "$wallpaper_current" || true
 
-# Run wallust to generate colors (silent mode)
-if command -v wallust >/dev/null 2>&1; then
-  wallust run "$wallpaper_path" -s &
-fi   
+# Run wallust (silent) to regenerate templates defined in ~/.config/wallust/wallust.toml
+# -s is used in this repo to keep things quiet and avoid extra prompts
+wallust run -s "$wallpaper_path" || true
+notify-send "Wallust: Regenerated templates for $(basename "$wallpaper_path")"
+hyprctl reload
