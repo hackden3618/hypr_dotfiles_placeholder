@@ -7,14 +7,14 @@ local UserScripts = HOME .. "/.config/hypr/UserScripts"
 
 local wallDIR = HOME .. "/Pictures/wallpapers"
 local lock = scriptsDir .. "/LockScreen.sh"
-local SwwwRandom = UserScripts .. "/WallpaperAutoChange.sh"
+local awwwRandom = UserScripts .. "/WallpaperAutoChange.sh"
 local livewallpaper = "\"\""
 
 -- wallpaper stuff 
 --exec-once = mpvpaper '*' -o "load-scripts=no no-audio --loop" $livewallpaper
 
 -- wallpaper random
---exec-once = $SwwwRandom $wallDIR # random wallpaper switcher every 30 minutes
+--exec-once = $awwwRandom $wallDIR # random wallpaper switcher every 30 minutes
 
 -- Startup
 
