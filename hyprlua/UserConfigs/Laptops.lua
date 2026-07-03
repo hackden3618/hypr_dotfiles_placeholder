@@ -9,7 +9,7 @@ local mainMod = "SUPER"
 local scriptsDir = HOME .. "/.config/hypr/scripts"
 local UserConfigs = HOME .. "/.config/hypr/hyprconf/UserConfigs"
 
--- for disabling Touchpad. hyprctl devices to get device name. 
+-- for disabling Touchpad. hyprctl devices to get device name.
 local Touchpad_Device = "elan-touchpad" -- =asue1209:00-04f3:319f-touchpad
 
 hl.bind("XF86KbdBrightnessDown", hl.dsp.exec_cmd(scriptsDir .. "/BrightnessKbd.sh --dec"), { repeating = true })
@@ -28,11 +28,13 @@ hl.bind(mainMod .. " + CTRL + F6", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh
 hl.bind(mainMod .. " + ALT + F6", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --in10"))
 hl.bind("ALT + F6", hl.dsp.exec_cmd(scriptsDir .. "/ScreenShot.sh --active"))
 
-local TOUCHPAD_ENABLED = false 
-hl.device({
-    name = Touchpad_Device,
-    enabled = TOUCHPAD_ENABLED,
-})
+-- local TOUCHPAD_ENABLED = false
+-- hl.device({
+--     name = Touchpad_Device,
+--     enabled = TOUCHPAD_ENABLED,
+-- })
+--
+dofile(HOME .. "/.config/hypr/hyprlua/Generated/Touchpad.lua")
 
 -- Below are useful when you are connecting your laptop in external display
 -- Suggest you edit below for your laptop display

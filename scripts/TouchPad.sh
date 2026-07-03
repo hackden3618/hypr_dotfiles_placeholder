@@ -1,78 +1,46 @@
 #!/usr/bin/env bash
-# /* ---- 💫 https://github.com/JaKooLit 💫 ---- */  ##
-# For disabling touchpad.
-# Edit the Touchpad_Device on ~/.config/hypr/hyprconf/UserConfigs/Laptops.conf according to your system
-# use hyprctl devices to get your system touchpad device name
-# source https://github.com/hyprwm/Hyprland/discussions/4283?sort=new#discussioncomment-8648109
 
-notif="$HOME/.config/swaync/images/ja.png"
-configured_touchpad_device="$(
-    awk -F= '/^[[:space:]]*\$Touchpad_Device[[:space:]]*=/ {
-        value=$2
-        sub(/[[:space:]]*#.*/, "", value)
-        gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
-        print value
-        exit
-    }' "$HOME/.config/hypr/hyprconf/UserConfigs/Laptops.conf"
-)"
+set -euo pipefail
 
-touchpad_devices() {
-    if command -v jq >/dev/null 2>&1; then
-        hyprctl devices -j 2>/dev/null |
-            jq -r '.mice[]?.name // empty' |
-            awk 'tolower($0) ~ /(touchpad|trackpad|elan|asue|synaptics)/ { print }'
-    else
-        hyprctl devices 2>/dev/null |
-            awk '
-                /Touchpad at/ { in_touchpad = 1; next }
-                in_touchpad && /^[^[:space:]].*:$/ { in_touchpad = 0 }
-                in_touchpad && /^[[:space:]]*name:/ {
-                    sub(/^[[:space:]]*name:[[:space:]]*/, "")
-                    print
-                }
-            '
-    fi
-}
+GENERATED="$HOME/.config/hypr/hyprlua/Generated/Touchpad.lua"
 
-set_touchpad_state() {
-    local state="$1"
-    local ok=1
-    local device
+mkdir -p "$(dirname "$GENERATED")"
 
-    if hyprctl keyword 'input:touchpad:enabled' "$state" -r 2>/dev/null; then
-        ok=0
-    fi
+DEVICE=$(
+    hyprctl -j devices \
+    | jq -r '.mice[]
+        | select(.name | test("touchpad"; "i"))
+        | .name' \
+    | head -n1
+)
 
-    for device in "$configured_touchpad_device" $(touchpad_devices); do
-        [ -n "$device" ] || continue
-        hyprctl keyword "device[$device]:enabled" "$state" -r 2>/dev/null && ok=0
-        hyprctl keyword "device:$device:enabled" "$state" -r 2>/dev/null && ok=0
-    done
-
-    return "$ok"
-}
-
-runtime_dir="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}"
-export STATUS_FILE="$runtime_dir/touchpad.status"
-
-enable_touchpad() {
-    printf "true" >"$STATUS_FILE"
-    notify-send -u low -i $notif  " Enabling" " touchpad"
-    set_touchpad_state "true"
-}
-
-disable_touchpad() {
-    printf "false" >"$STATUS_FILE"
-    notify-send -u low -i $notif " Disabling" " touchpad"
-    set_touchpad_state "false"
-}
-
-if ! [ -f "$STATUS_FILE" ]; then
-  disable_touchpad
-else
-  if [ "$(cat "$STATUS_FILE")" = "true" ]; then
-    disable_touchpad
-  elif [ "$(cat "$STATUS_FILE")" = "false" ]; then
-    enable_touchpad
-  fi
+if [[ -z "$DEVICE" ]]; then
+    notify-send "Touchpad" "No touchpad found."
+    exit 1
 fi
+
+CURRENT=true
+
+if [[ -f "$GENERATED" ]]; then
+    CURRENT=$(
+        grep 'enabled =' "$GENERATED" \
+        | grep -oE 'true|false'
+    )
+fi
+
+if [[ "$CURRENT" == "true" ]]; then
+    NEW=false
+else
+    NEW=true
+fi
+
+cat > "$GENERATED" <<EOF
+hl.device({
+    name = "$DEVICE",
+    enabled = $NEW,
+})
+EOF
+
+hyprctl reload
+
+notify-send "Touchpad" "$([[ $NEW == true ]] && echo Enabled || echo Disabled)"
