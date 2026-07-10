@@ -1,4 +1,4 @@
-HOME = os.getenv("HOME") or "/home/admin"
+HOME = os.getenv("HOME") or "/home/dennis"
 
 mainMod = "SUPER"
 scriptsDir = HOME .. "/.config/hypr/scripts"

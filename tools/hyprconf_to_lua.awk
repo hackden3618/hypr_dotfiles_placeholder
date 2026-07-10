@@ -424,7 +424,7 @@ BEGIN {
   print "  return values"
   print "end"
   print ""
-  print "local wallust_vars = load_hyprlang_vars(\"/home/admin/.config/hypr/wallust/wallust-hyprland.conf\")"
+  print "local wallust_vars = load_hyprlang_vars(os.getenv(\"HOME\") .. \"/.config/hypr/wallust/wallust-hyprland.conf\")"
   print ""
 }
 
