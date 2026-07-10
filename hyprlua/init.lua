@@ -33,6 +33,17 @@ load("UserConfigs/01-UserDefaults.lua")
 load("UserConfigs/UserKeybinds.lua")
 load("UserConfigs/UserSettings.lua")
 
-load("monitor.lua")
+-- monitor.lua replaced by auto-sync from monitors.conf (nwg-displays compatible)
+local mon = io.open(HOME .. "/.config/hypr/monitors.conf", "r")
+if mon then
+  for line in mon:lines() do
+    local output, mode, pos, scale = line:match("monitor=%s*([^,]+),%s*([^,]+),%s*([^,]+),%s*([^,]+)")
+    if output then
+      hl.monitor({ output = output, mode = mode, position = pos, scale = scale })
+    end
+  end
+  mon:close()
+end
+
 load("workspaces.lua")
 load("configs/plugins/hyprexpo.lua")
